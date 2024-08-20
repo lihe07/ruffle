@@ -12,7 +12,9 @@ describe("Embed tag", () => {
 
     it("polyfills with ruffle", async () => {
         await injectRuffleAndWait(browser);
-        const actual = await browser.$("#test-container").getHTML(false);
+        const actual = await browser
+            .$("#test-container")
+            .getHTML({ includeSelectorTag: false, pierceShadowRoot: false });
         const expected = fs.readFileSync(
             `${import.meta.dirname}/expected.html`,
             "utf8",
@@ -23,7 +25,7 @@ describe("Embed tag", () => {
     it("Plays a movie", async () => {
         await playAndMonitor(
             browser,
-            await browser.$("#test-container").$("<ruffle-embed />"),
+            await browser.$("#test-container").$("ruffle-embed"),
         );
     });
 });
